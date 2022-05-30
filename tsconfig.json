@@ -1,0 +1,9 @@
+{
+    "extends": "@tsconfig/node16/tsconfig.json",
+    "include": ["stacks"],
+    "compilerOptions": {
+        "resolveJsonModule": true,
+        "module": "commonjs",
+        "esModuleInterop": true
+    }
+}

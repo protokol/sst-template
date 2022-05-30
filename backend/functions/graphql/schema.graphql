@@ -1,0 +1,43 @@
+type User {
+  pk: ID!
+  sk: String!
+  walletAddress: String!
+  firstName: String
+  lastName: String
+  email: String
+  twitterHandle: String
+  createdAt: Int
+}
+
+input UserInput {
+  pk: ID!
+  sk: String!  
+  walletAddress: String!
+  firstName: String
+  lastName: String
+  email: String
+  twitterHandle: String
+  createdAt: Int
+}
+
+input UpdateUserInput {
+  pk: ID!
+  sk: String!
+  walletAddress: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  twitterHandle: String!
+  createdAt: Int
+}
+
+type Query {
+  listUsers: [User]
+  getUser(user: UserInput!): User
+}
+
+type Mutation {
+  createUser(user: UserInput!): User
+  deleteUser(user: UserInput!): User
+  updateUser(user: UpdateUserInput!): User
+}

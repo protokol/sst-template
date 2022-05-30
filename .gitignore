@@ -1,0 +1,8 @@
+.sst
+.build
+node_modules
+.env
+yarn-lock.json
+cdk.context.json
+cdk-output.json
+.idea

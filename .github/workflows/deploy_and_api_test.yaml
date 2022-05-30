@@ -1,0 +1,40 @@
+name: SST Test Deploy With API Tests Infrastructure
+on:
+  pull_request:
+    types:
+      - ready_for_review
+      - synchronize
+      - opened
+
+env:
+    HOSTED_ZONE_DOMAIN: ${{ secrets.HOSTED_ZONE_DOMAIN }}
+
+jobs:
+  style:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Skip Duplicate Actions
+        uses: fkirc/skip-duplicate-actions@v4.0.0
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies (npm)
+        run: npm install --frozen-lockfile
+
+      - name: Deploy Staging
+        run: npm run deploy-staging
+
+      - name: Run Tests
+        run: npm run test
